@@ -13,12 +13,12 @@ export const POST: ({request}: { request: any }) => Promise<{ body: { user: User
         const controller = new Register();
         const newUser = await controller.registerUser(body);
 
+        const header = new Headers();
+        header.append("username", newUser.user.username);
+        header.append("Token", newUser.token);
 
-        return new Response();
+        return new Response("Succesfully created the User", { status: 200, headers : header});
     } catch (error) {
-        console.log(error)
-        console.log("Ein Fehler ist aufgetreten")
-        const myOptions = { status: 500 };
-        return new Response("User could not be Created", myOptions);
+        return new Response("User could not be Created", { status: 500 });
     }
 };

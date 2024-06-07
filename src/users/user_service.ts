@@ -116,10 +116,9 @@ export class UserService {
         const isValid = await bcrypt.compare(password, user.password);
         if(!isValid)
             return Promise.reject(new Error("Login failed: Incorrect username or password!"));
-        console.log(jwt.sign)
-        console.log(jwt)
+
         const token = jwt.sign({ username: user.username }, process.env.SECRET_KEY, { expiresIn: process.env.EXPIRATION_TIME });
-        console.log(token)
+
         delete user.password;
         return Promise.resolve({user:user, token:token});
     }

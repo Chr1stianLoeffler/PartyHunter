@@ -2,6 +2,13 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { UserController } from '../../../../users/user_controller';
 import { type User } from '../../../../users/user'
 
+function extractToken(headers: Headers): string | null {
+    const authHeader = headers.get('Authorization');
+    if (!authHeader) return null;
+    const token = authHeader.split(' ')[1]; // Bearer token
+    return token;
+}
+
 export const GET: ({params}: { params: any }) => Promise<{ body: User; status: number } | {
     body: { error: string };
     status: number
@@ -30,38 +37,35 @@ export const PUT: ({params, request}: { params: any; request: any }) => Promise<
     try {
         const { username } = params;
         const body = await request.json();
-        const controller = new UserController();
-        const updatedUser = await controller.updateUser(username, body);
+        const token = extractToken(request.headers);
 
-        return {
-            status: 200,
-            body: updatedUser,
-        };
+
+        const controller = new UserController();
+        const updatedUser = await controller.updateUser(username, body, token);
+
+        const header = new Headers();
+        header.append("username" , updatedUser.username);
+        header.append("Token", token);
+
+        return new Response("Succesfully updated the User", { status: 200, headers: header});
     } catch (error) {
-        return {
-            status: 500,
-            body: { error: 'Failed to update user' },
-        };
+        return new Response("Failed to update user", {status: 500 });
     }
 };
 
-export const DELETE: ({params}: { params: any }) => Promise<{ body: User; status: number } | {
+export const DELETE: ({params}: { params: any, request: any }) => Promise<{ body: User; status: number } | {
     body: { error: string };
     status: number
-}> = async ({ params }) => {
+}> = async ({ params , request}) => {
     try {
         const { username } = params;
+        const token = extractToken(request.headers);
         const controller = new UserController();
-        const deletedUser = await controller.deleteUser(username);
+        const deletedUser = await controller.deleteUser(username, token);
 
-        return {
-            status: 200,
-            body: deletedUser,
-        };
+
+        return new Response("Succesfully deleted the User", { status: 200 });
     } catch (error) {
-        return {
-            status: 500,
-            body: { error: 'Failed to delete user' },
-        };
+        return new Response("Failed to delete user", {status: 500 });
     }
 };

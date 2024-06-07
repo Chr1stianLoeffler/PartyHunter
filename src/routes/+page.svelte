@@ -3,6 +3,7 @@
   let accountEmail = '';
   let password = '';
   let message = '';
+  let token;
 
 
   const register = async () => {
@@ -18,9 +19,7 @@
 
         if (response.ok) {
           message = 'User registered successfully!';
-          // Optionally redirect to a different page after registration
-          // goto('/login');
-
+          token = response.headers.getSetCookie()
         } else {
           const error = await response.json();
           message = 'Error: ' + error.message;
