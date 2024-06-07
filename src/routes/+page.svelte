@@ -38,20 +38,6 @@
     }
   }
 
-  function handleRegistrationKeyPress2(){
-    if (username && email && password){
-      console.log(username, email, password);
-      try{
-        const user = {
-
-        }
-      } catch (Error){
-
-      }
-    } else {
-      console.log("Es fehlen Daten, um sich zu registrieren");
-    }
-  }
 </script>
 
 <div class="container">

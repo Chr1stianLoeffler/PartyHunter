@@ -2,6 +2,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { Register } from "../../../users/auth_controller";
 import { type User } from '../../../users/user'
 
+
 export const POST: ({request}: { request: any }) => Promise<{ body: { user: User; token: string }; status: number } | {
     body: { error: string };
     status: number
@@ -9,17 +10,18 @@ export const POST: ({request}: { request: any }) => Promise<{ body: { user: User
     try {
         const body = await request.json();
         const controller = new Register();
-        const newUser = await controller.registerUser(body);
         console.log("The User should be created")
+        const newUser = await controller.registerUser(body);
+
 
         return {
             status: 201,
             body: newUser,
         };
     } catch (error) {
-        return {
-            status: 500,
-            body: { error: 'Failed to create user' },
-        };
+        console.log(error)
+        console.log("Ein Fehler ist aufgetreten")
+        const myOptions = { status: 500 };
+        return new Response("User could not be Created", myOptions);
     }
 };
