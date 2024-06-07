@@ -19,13 +19,15 @@
 
         if (response.ok) {
           message = 'User registered successfully!';
-          token = response.headers.getSetCookie()
+          token = response.headers.get("Authorization")
+          if(token)
+            sessionStorage.setItem("jwt", token)
         } else {
           const error = await response.json();
           message = 'Error: ' + error.message;
         }
-      } catch (error) {
-        message = 'Error: ' + error.message;
+      } catch (error: any) {
+          message = 'Error: ' + error.message;
       }
     } else {
       message = 'Es fehlen Daten, um sich zu registrieren';

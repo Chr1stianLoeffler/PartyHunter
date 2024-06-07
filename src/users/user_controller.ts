@@ -10,7 +10,7 @@ export class UserController{
     @Response(404, "NOT FOUND")
     public async getUser(
                 username: string
-    ): Promise<User> {
+    ): Promise<User | null> {
         return new UserService().getUserName(username);
     }
 
@@ -23,7 +23,7 @@ export class UserController{
                 username: string, 
         @Body() requestBody: User,
         @Header("Authorization") token: string
-    ): Promise<User> {
+    ): Promise<User | null> {
         return new UserService().updateUser(username, requestBody, token);
     }
 

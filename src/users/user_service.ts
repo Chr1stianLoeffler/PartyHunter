@@ -26,7 +26,7 @@ export class UserService {
     private verifyJwt(token:string): string {
         if(!token) throw new Error("No token provided");
         
-        const verified = jwt.verify(token, process.env.SECRET_KEY) as {username: string};
+        const verified = jwt.verify(token, process.env.SECRET_KEY as string) as unknown as {username: string};
         return verified.username;
     }
 
@@ -36,17 +36,17 @@ export class UserService {
         return collection;
     }
 
-    public async getUserId(userId:mongo.ObjectId): Promise<User> {       //returns User if user was found and null if no user was found
+    public async getUserId(userId:mongo.ObjectId): Promise<User | null> {       //returns User if user was found and null if no user was found
         const coll = await this.collection();
         return coll.findOne({"_id": userId},{projection: this.userProjection});
     }
 
-    public async getUserName(name:string): Promise<User> {
+    public async getUserName(name:string): Promise<User | null> {
         const coll = await this.collection();
         return coll.findOne({"username": name},{projection: this.userProjection});
     }
 
-    public async getUserEmail(email:string): Promise<User> {
+    public async getUserEmail(email:string): Promise<User | null> {
         const coll = await this.collection();
         return coll.findOne({"accountEmail": email},{projection: this.userProjection});
     }
@@ -61,18 +61,25 @@ export class UserService {
         
         const coll = await this.collection();
         const insertResult: mongo.InsertOneResult = await coll.insertOne(toCreate);
-        delete toCreate.password;
+        const userWithoutPassword: User = {     //turn UserWithPass into normal User without Typescript crying
+            _id: toCreate._id,
+            username: toCreate.username,
+            accountEmail: toCreate.accountEmail,
+            description: toCreate.description,
+            accountType: toCreate.accountType,
+            contact: toCreate.contact
+        };
         const user = new Promise<User>((res,rej) => {
             if(insertResult.acknowledged === true) {
-                toCreate._id = insertResult.insertedId;
-                res(toCreate);
+                userWithoutPassword._id = insertResult.insertedId;
+                res(userWithoutPassword);
             }
-            rej(new Error("Something went wrong while trying to create User: " + JSON.stringify(toCreate)));
+            rej(new Error("Something went wrong while trying to create User: " + JSON.stringify(userWithoutPassword)));
         })
         return user;
     }
 
-    public async updateUser(name: string, valuesToUpdate: User, token:string): Promise<User> {   //toUpdate should have the form {property1 : "new value", property2 : "new value"}
+    public async updateUser(name: string, valuesToUpdate: User, token:string): Promise<User | null> {   //toUpdate should have the form {property1 : "new value", property2 : "new value"}
         if(this.verifyJwt(token) !== name)
             return Promise.reject(new Error("Update failed: Unauthorized"));
         const coll = await this.collection();
@@ -86,7 +93,7 @@ export class UserService {
         if(this.verifyJwt(token) !== name)
             return Promise.reject(new Error("Delete failed: Unauthorized"));
         const coll = await this.collection();
-        const delete_result: User = await coll.findOneAndDelete({"username": name},{projection: this.userProjection});
+        const delete_result: User | null = await coll.findOneAndDelete({"username": name},{projection: this.userProjection});
         const user = new Promise<User>((res, rej) => {
             if(delete_result)   res(delete_result);
             else                rej(new Error("Delete failed: User with name " + name + " not found."));
@@ -112,14 +119,23 @@ export class UserService {
             ]
         };
         const user = await coll.findOne(query);
-
+        if(!user)
+            return Promise.reject(new Error("Login failed: Incorrect username or password!"));
         const isValid = await bcrypt.compare(password, user.password);
         if(!isValid)
             return Promise.reject(new Error("Login failed: Incorrect username or password!"));
 
-        const token = jwt.sign({ username: user.username }, process.env.SECRET_KEY, { expiresIn: process.env.EXPIRATION_TIME });
+        const token = jwt.sign({ username: user.username }, process.env.SECRET_KEY as string, { expiresIn: process.env.EXPIRATION_TIME });
 
-        delete user.password;
-        return Promise.resolve({user:user, token:token});
+        const userWithoutPassword: User = {     //turn UserWithPass into normal User without Typescript crying
+            _id: user._id,
+            username: user.username,
+            accountEmail: user.accountEmail,
+            description: user.description,
+            accountType: user.accountType,
+            contact: user.contact
+        };
+
+        return Promise.resolve({user:userWithoutPassword, token:token});
     }
 }
