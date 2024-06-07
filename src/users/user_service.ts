@@ -17,10 +17,8 @@ export class UserService {
             _id: 1,
             username: 1,
             accountEmail: 1,
-            password: 0,
             description: 1,
             accountType: 1,
-
             contact: 1,
         }
     }
@@ -59,7 +57,7 @@ export class UserService {
         if(await this.getUserName(toCreate.username))
             return Promise.reject(new Error("Username already taken."))
         if(await this.getUserEmail(toCreate.accountEmail)) 
-            return Promise.reject(new Error("Email already in use."))
+            return Promise.reject(new Error("Email already in use." + toCreate.accountEmail))
         
         const coll = await this.collection();
         const insertResult: mongo.InsertOneResult = await coll.insertOne(toCreate);
@@ -114,11 +112,14 @@ export class UserService {
             ]
         };
         const user = await coll.findOne(query);
+
         const isValid = await bcrypt.compare(password, user.password);
         if(!isValid)
             return Promise.reject(new Error("Login failed: Incorrect username or password!"));
-
+        console.log(jwt.sign)
+        console.log(jwt)
         const token = jwt.sign({ username: user.username }, process.env.SECRET_KEY, { expiresIn: process.env.EXPIRATION_TIME });
+        console.log(token)
         delete user.password;
         return Promise.resolve({user:user, token:token});
     }

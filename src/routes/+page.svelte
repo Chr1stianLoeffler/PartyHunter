@@ -1,19 +1,19 @@
 <script lang="ts">
   let username = '';
-  let email = '';
+  let accountEmail = '';
   let password = '';
   let message = '';
 
 
   const register = async () => {
-    if (username && email && password) {
+    if (username && accountEmail && password) {
       try {
         const response = await fetch('/api/users', {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json'
           },
-          body: JSON.stringify({ username, email, password })
+          body: JSON.stringify({ username, accountEmail, password })
         });
 
         if (response.ok) {
@@ -49,7 +49,7 @@
   </div>
   <form class="form" on:submit|preventDefault={register}>
     <input class="input" type="text" placeholder="Benutzername" bind:value={username} required />
-    <input class="input" type="email" placeholder="E-Mail" bind:value={email} required />
+    <input class="input" type="email" placeholder="E-Mail" bind:value={accountEmail} required />
     <input class="input" type="password" placeholder="Passwort" bind:value={password} required />
     <button class="button" type="submit" on:keypress={handleRegistrationKeyPress}>Registrieren</button>
   </form>

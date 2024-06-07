@@ -9,8 +9,8 @@ export const POST: ({request}: { request: any }) => Promise<{ body: { user: User
 }> = async ({ request }) => {
     try {
         const body = await request.json();
+        console.log(body)
         const controller = new Register();
-        console.log("The User should be created")
         const newUser = await controller.registerUser(body);
 
 
