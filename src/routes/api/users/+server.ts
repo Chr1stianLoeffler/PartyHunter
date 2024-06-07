@@ -14,10 +14,7 @@ export const POST: ({request}: { request: any }) => Promise<{ body: { user: User
         const newUser = await controller.registerUser(body);
 
 
-        return {
-            status: 201,
-            body: newUser,
-        };
+        return new Response();
     } catch (error) {
         console.log(error)
         console.log("Ein Fehler ist aufgetreten")

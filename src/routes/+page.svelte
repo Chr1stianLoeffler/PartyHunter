@@ -20,6 +20,7 @@
           message = 'User registered successfully!';
           // Optionally redirect to a different page after registration
           // goto('/login');
+
         } else {
           const error = await response.json();
           message = 'Error: ' + error.message;

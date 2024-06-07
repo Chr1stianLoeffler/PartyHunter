@@ -2,7 +2,7 @@ import { configDotenv } from "dotenv";
 import { type User, type UserWithPass } from "./user";
 import * as mongo from "mongodb";
 import bcrypt from "bcrypt";
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 
 export class UserService {
