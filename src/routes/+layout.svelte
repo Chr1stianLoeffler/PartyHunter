@@ -1,4 +1,4 @@
-<script lang="ts">
+<script>
 	import '../app.postcss';
 	import { AppShell, AppBar } from '@skeletonlabs/skeleton';
 </script>
@@ -9,7 +9,7 @@
 		<!-- App Bar -->
 		<AppBar>
 			<svelte:fragment slot="lead">
-				<strong class="text-xl uppercase">Skeleton</strong>
+				<strong class="text-xl uppercase">Party-Hunter</strong>
 			</svelte:fragment>
 			<svelte:fragment slot="trail">
 				<a
@@ -26,7 +26,7 @@
 					target="_blank"
 					rel="noreferrer"
 				>
-					Twitter
+					Login
 				</a>
 				<a
 					class="btn btn-sm variant-ghost-surface"

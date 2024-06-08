@@ -1,125 +1,55 @@
-<script lang="ts">
-  let username = '';
-  let accountEmail = '';
-  let password = '';
-  let message = '';
-  let token;
-
-
-  const register = async () => {
-    if (username && accountEmail && password) {
-      try {
-        const response = await fetch('/api/users', {
-          method: 'POST',
-          headers: {
-            'Content-Type': 'application/json'
-          },
-          body: JSON.stringify({ username, accountEmail, password })
-        });
-
-        if (response.ok) {
-          message = 'User registered successfully!';
-          token = response.headers.get("Authorization")
-          if(token)
-            sessionStorage.setItem("jwt", token)
-        } else {
-          const error = await response.json();
-          message = 'Error: ' + error.message;
-        }
-      } catch (error: any) {
-          message = 'Error: ' + error.message;
-      }
-    } else {
-      message = 'Es fehlen Daten, um sich zu registrieren';
-    }
-  };
-
-  function handleRegistrationKeyPress(event: KeyboardEvent) {
-    if (event.key === 'Enter') {
-      register();
-    }
-  }
-
+<script>
+  // JavaScript-Code kann hier platziert werden, falls notwendig.
 </script>
 
-<div class="container">
-  <div class="logo">
-    PARTY <span>  HUNTER  </span>
+<div class="container h-full mx-auto flex justify-center items-center">
+  <div class="space-y-10 text-center flex flex-col items-center">
+    <h2 class="text-2xl font-bold">Willkommen bei</h2>
+    <figure class="relative w-64 h-64 md:w-80 md:h-80">
+      <div class="bg-effect absolute top-0 left-0 w-full h-full rounded-full blur-[50px] transition-all z-[-1]"></div>
+      <img src="/PartyHunterLogo.png" alt="Party Hunter Logo" class="w-full h-full object-cover">
+    </figure>
+    <div class="flex justify-center space-x-2">
+      <a class="btn variant-filled" href="https://skeleton.dev/" target="_blank" rel="noreferrer">
+        Entdecke neue Events und Partys in deiner Nähe!
+      </a>
+    </div>
+    <div class="space-y-2">
+      
+      <button class="btn glass">Jetzt Regestrieren</button>
+      
+    </div>
   </div>
-  <div class="subtitle">
-    ERSTELLE EINEN NEUEN ACCOUNT
-  </div>
-  <form class="form" on:submit|preventDefault={register}>
-    <input class="input" type="text" placeholder="Benutzername" bind:value={username} required />
-    <input class="input" type="email" placeholder="E-Mail" bind:value={accountEmail} required />
-    <input class="input" type="password" placeholder="Passwort" bind:value={password} required />
-    <button class="button" type="submit" on:keypress={handleRegistrationKeyPress}>Registrieren</button>
-  </form>
 </div>
 
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Bebas+Neue&display=swap');
-
   .container {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    justify-content: center;
-    height: 100vh;
-    background-color: #000;
-    color: #fff;
-    text-align: center;
+    height: 100vh; /* Vollbild Container */
   }
 
-  .logo {
-    font-family: 'Bebas Neue', sans-serif;
-    font-size: 6rem;
-    font-weight: bold;
-    margin-bottom: 2rem;
-    letter-spacing: 0.5rem;
+  .bg-effect {
+    background: linear-gradient(270deg, #fd749b, #281ac8);
+    animation: pulse 5s cubic-bezier(0, 0, 0, 0.5) infinite, glow 5s linear infinite;
   }
 
-  .logo span {
-    display: block;
-    font-size: 1rem;
-    letter-spacing: normal;
-    color: #fff;
+  @keyframes glow {
+    0% {
+      background-color: #fd749b;
+    }
+    33% {
+      background-color: #281ac8;
+    }
+    66% {
+      background-color: #ffcc70;
+    }
+    100% {
+      background-color: #fd749b;
+    }
   }
 
-  .subtitle {
-    font-size: 1.5rem;
-    margin-bottom: 1rem;
-  }
-
-  .form {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-    gap: 1rem;
-  }
-
-  .input {
-    padding: 0.5rem;
-    font-size: 1rem;
-    border-radius: 5px;
-    border: 1px solid #ccc;
-    width: 300px;
-  }
-
-  .button {
-    background: linear-gradient(45deg, #7f00ff, #e100ff);
-    border: none;
-    border-radius: 5px;
-    padding: 1rem 2rem;
-    color: white;
-    font-size: 1rem;
-    cursor: pointer;
-    transition: transform 0.3s ease-in-out;
-  }
-
-  .button:hover {
-    transform: scale(1.1);
+  @keyframes pulse {
+    50% {
+      transform: scale(1.5);
+    }
   }
 </style>
-
-
