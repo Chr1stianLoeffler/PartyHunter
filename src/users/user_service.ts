@@ -57,7 +57,7 @@ export class UserService {
         if(await this.getUserName(toCreate.username))
             return Promise.reject(new Error("Username already taken."))
         if(await this.getUserEmail(toCreate.accountEmail)) 
-            return Promise.reject(new Error("Email already in use." + toCreate.accountEmail))
+            return Promise.reject(new Error("Email already in use: " + toCreate.accountEmail))
         
         const coll = await this.collection();
         const insertResult: mongo.InsertOneResult = await coll.insertOne(toCreate);
