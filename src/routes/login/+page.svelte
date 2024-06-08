@@ -9,8 +9,8 @@
 
     const login = async() => {
         if (username && password) {
-            const response = await fetch('/api/users', {
-                method: 'LOGIN',
+            const response = await fetch('/api/users/login', {
+                method: 'POST',
                 headers: {
                     'Content-Type': 'application/json'
                 },
@@ -34,4 +34,21 @@
             errorMessage = 'Es fehlen Daten, um sich zu registrieren';
         }
     }
+
+    function handleRegistrationKeyPress(event: KeyboardEvent) {
+        if (event.key === 'Enter') {
+            login();
+        }
+    }
 </script>
+
+<div class="container">
+    <form class="form" on:submit|preventDefault={login}>
+        <input class="input" type="text" placeholder="Benutzername" bind:value={username} required />
+        <input class="input" type="password" placeholder="Passwort" bind:value={password} required />
+        <button class="button" type="submit" on:keypress={handleRegistrationKeyPress}>Login</button>
+    </form>
+    {#if errorMessage}
+        <div class="error-message">{errorMessage}</div>
+    {/if}
+</div>
