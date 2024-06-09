@@ -17,7 +17,9 @@ export const GET: ({params}: { params: any }) => Promise<{ body: User; status: n
         const { username } = params;
         const controller = new UserController();
         const user = await controller.getUser(username);
-
+        if(!user){
+            throw new Error("Username does not exist");
+        }
         return {
             status: 200,
             body: user,
@@ -30,22 +32,21 @@ export const GET: ({params}: { params: any }) => Promise<{ body: User; status: n
     }
 };
 
-export const PUT: ({params, request}: { params: any; request: any }) => Promise<{ body: User; status: number } | {
-    body: { error: string };
-    status: number
-}> = async ({ params, request }) => {
+export const PUT: ({params, request}: { params: any; request: any }) => Promise<Response> = async ({ params, request }) => {
     try {
         const { username } = params;
         const body = await request.json();
         const token = extractToken(request.headers);
-
+        if(!token)
+            throw new Error("No token provided")
 
         const controller = new UserController();
         const updatedUser = await controller.updateUser(username, body, token);
-
+        if(!updatedUser)
+            throw new Error("user not found");
         const header = new Headers();
         header.append("username" , updatedUser.username);
-        header.append("Token", token);
+        header.append("Authorization", token);
 
         return new Response("Succesfully updated the User", { status: 200, headers: header});
     } catch (error) {
@@ -53,13 +54,12 @@ export const PUT: ({params, request}: { params: any; request: any }) => Promise<
     }
 };
 
-export const DELETE: ({params}: { params: any, request: any }) => Promise<{ body: User; status: number } | {
-    body: { error: string };
-    status: number
-}> = async ({ params , request}) => {
+export const DELETE: ({params}: { params: any, request: any }) => Promise<Response> = async ({ params , request}) => {
     try {
         const { username } = params;
         const token = extractToken(request.headers);
+        if(!token)
+            throw new Error("No token provided");
         const controller = new UserController();
         const deletedUser = await controller.deleteUser(username, token);
 

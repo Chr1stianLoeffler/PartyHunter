@@ -8,22 +8,18 @@ function extractToken(headers: Headers): string | null {
     return token;
 }
 
-export const POST: RequestHandler = async ({ request }) => {
+export const POST: ({request}: { request: any }) => Promise<Response> = async ({ request }) => {
     try {
         const body = await request.json();
-        const token = extractToken(request)
+        const token = extractToken(request.headers)
+        if(!token)
+            throw new Error("No token provided");
         const controller = new EventController();
-        const newUser = await controller.createEvent(body);
+        const newEvent = await controller.createEvent(body,token);
         console.log("The Event should be created")
 
-        return {
-            status: 201,
-            body: newUser,
-        };
+        return new Response(JSON.stringify(newEvent), {status: 201});
     } catch (error) {
-        return {
-            status: 500,
-            body: { error: 'Failed to create Event' },
-        };
+        return new Response(JSON.stringify({body: { error: 'Failed to create Event' }}), {status:500});
     }
 };

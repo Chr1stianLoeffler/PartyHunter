@@ -22,7 +22,7 @@ export class UserController{
     public async updateUser( 
                 username: string, 
         @Body() requestBody: User,
-        @Header("Authorization") token: string
+        @Header("Authorization") token: string|null
     ): Promise<User | null> {
         return new UserService().updateUser(username, requestBody, token);
     }

@@ -4,7 +4,7 @@
     let username = '';
     let password = '';
     let message = '';
-    let token = '';
+    let token: string|null = '';
     let errorMessage = '';
 
     const login = async() => {
@@ -31,7 +31,7 @@
                 errorMessage = 'Error: ' + errorData.message;
             }
         } else {
-            errorMessage = 'Es fehlen Daten, um sich zu registrieren';
+            errorMessage = 'Es fehlen Daten, um sich anzumelden';
         }
     }
 

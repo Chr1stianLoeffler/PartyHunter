@@ -11,7 +11,7 @@ export class EventController{
     @Response(404, "NOT FOUND")
     public async getEvent(
                 eventId: string
-    ): Promise<Event> {
+    ): Promise<Event|null> {
         return new EventService().getEvent(new ObjectId(eventId));
     }
 
@@ -35,7 +35,7 @@ export class EventController{
                 eventId: string, 
         @Body() requestBody: Event,
         @Header("Authorization") token: string
-    ): Promise<Event> {
+    ): Promise<Event|null> {
         return new EventService().updateEvent(new ObjectId(eventId), requestBody, token);
     }
 
