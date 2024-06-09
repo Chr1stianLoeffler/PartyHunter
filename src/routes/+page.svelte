@@ -17,7 +17,7 @@
     </div>
     <div class="space-y-2">
       
-      <a class="btn glass" href="registrieren">Jetzt Regestrieren</a>
+      <a class="btn glass" href="registrieren">Jetzt Registrieren</a>
       
     </div>
   </div>

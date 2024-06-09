@@ -1,5 +1,6 @@
 <script lang="ts">
     import {goto} from "$app/navigation";
+    import { browser } from '$app/environment';
 
     let username = '';
     let password = '';
@@ -19,9 +20,11 @@
             if (response.ok) {
                 message = 'User registered successfully!';
                 token = response.headers.get("Authorization")
-                if (token)
-                    sessionStorage.setItem("jwt", token)
-                sessionStorage.setItem("username", username)
+                if(browser){
+                    if (token)
+                        sessionStorage.setItem("jwt", token)
+                    sessionStorage.setItem("username", username)
+                }
                 goto("/main")
             } else if (response.status == 409){
                 const errorData = await response.json();

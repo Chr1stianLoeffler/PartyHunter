@@ -1,4 +1,7 @@
 <script lang="ts">
-    const username = sessionStorage.getItem("username")
-    const token = sessionStorage.getItem("jwt")
+    import { browser } from '$app/environment';
+    if(browser){
+        const username = sessionStorage.getItem("username")
+        const token = sessionStorage.getItem("jwt")
+    }
 </script>
