@@ -11,6 +11,7 @@
       </svelte:fragment>
       <svelte:fragment slot="trail">
         <a class="btn btn-primary text-xl uppercase font-bold" href="/events">Events</a>
+        <a class="btn btn-primary text-xl uppercase font-bold" href="/events/new">Neues Event erstellen</a> <!-- Neuer Link hinzugefügt -->
         <a class="btn btn-primary text-xl uppercase font-bold" href="https://discord.gg/EXqV7W8MtY" target="_blank" rel="noreferrer">Discord</a>
         <a class="btn btn-primary text-xl uppercase font-bold" href="https://twitter.com/SkeletonUI" target="_blank" rel="noreferrer">Login</a>
         <a class="btn btn-primary text-xl uppercase font-bold" href="https://github.com/skeletonlabs/skeleton" target="_blank" rel="noreferrer">GitHub</a>
