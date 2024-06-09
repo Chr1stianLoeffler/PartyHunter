@@ -14,7 +14,7 @@ export class EventService {
     private verifyJwt(token:string): string {
         if(!token) throw new Error("No token provided");
         
-        const verified = jwt.verify(token, process.env.SECRET_KEY) as {username: string};
+        const verified = jwt.verify(token, process.env.SECRET_KEY as string) as unknown as {username: string};
         return verified.username;
     }
 
@@ -24,7 +24,7 @@ export class EventService {
         return collection;
     }
 
-    public async getEvent(eventId: mongo.ObjectId): Promise<Event> {
+    public async getEvent(eventId: mongo.ObjectId): Promise<Event|null> {
         const coll = await this.collection();
         return coll.findOne({ "_id": eventId });
     }
@@ -47,8 +47,11 @@ export class EventService {
         return event;
     }
 
-    public async updateEvent(eventId: mongo.ObjectId, valuesToUpdate: Event, token:string): Promise<Event> {  //toUpdate should have the form {property1 : "new value", property2 : "new value"}
-        if(this.verifyJwt(token) !== (await this.getEvent(eventId)).creator)
+    public async updateEvent(eventId: mongo.ObjectId, valuesToUpdate: Event, token:string): Promise<Event|null> {  //toUpdate should have the form {property1 : "new value", property2 : "new value"}
+        const referencedEvent = await this.getEvent(eventId);
+        if(!referencedEvent)
+            return Promise.reject(new Error("Event not found"));
+        if(this.verifyJwt(token) !== (referencedEvent).creator)
             return Promise.reject(new Error("Update failed: Unautorized"));
         const coll = await this.collection();
         const update_result: mongo.UpdateResult = await coll.updateOne({ "_id": eventId }, { $set: valuesToUpdate });
@@ -58,10 +61,13 @@ export class EventService {
     }
 
     public async deleteEvent(eventId: mongo.ObjectId, token:string): Promise<Event> {
-        if(this.verifyJwt(token) !== (await this.getEvent(eventId)).creator)
-            return Promise.reject(new Error("Delete failed: Unautorized"));
+        const referencedEvent = await this.getEvent(eventId);
+        if(!referencedEvent)
+            return Promise.reject(new Error("Event not found"));
+        if(this.verifyJwt(token) !== (referencedEvent).creator)
+            return Promise.reject(new Error("Update failed: Unautorized"));
         const coll = await this.collection();
-        const delete_result: Event = await coll.findOneAndDelete({ "_id": eventId });
+        const delete_result: Event|null = await coll.findOneAndDelete({ "_id": eventId });
         const event = new Promise<Event>((res, rej) => {
             if (delete_result) res(delete_result);
             else rej(new Error("Delete failed: Event with id " + eventId.toString() + " not found."));

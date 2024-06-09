@@ -23,7 +23,7 @@ export class UserService {
         }
     }
 
-    private verifyJwt(token:string): string {
+    private verifyJwt(token:string|null): string {
         if(!token) throw new Error("No token provided");
         
         const verified = jwt.verify(token, process.env.SECRET_KEY as string) as unknown as {username: string};
@@ -57,7 +57,7 @@ export class UserService {
         if(await this.getUserName(toCreate.username))
             return Promise.reject(new Error("Username already taken."))
         if(await this.getUserEmail(toCreate.accountEmail)) 
-            return Promise.reject(new Error("Email already in use." + toCreate.accountEmail))
+            return Promise.reject(new Error("Email already in use: " + toCreate.accountEmail))
         
         const coll = await this.collection();
         const insertResult: mongo.InsertOneResult = await coll.insertOne(toCreate);
@@ -79,7 +79,7 @@ export class UserService {
         return user;
     }
 
-    public async updateUser(name: string, valuesToUpdate: User, token:string): Promise<User | null> {   //toUpdate should have the form {property1 : "new value", property2 : "new value"}
+    public async updateUser(name: string, valuesToUpdate: User, token:string|null): Promise<User | null> {   //toUpdate should have the form {property1 : "new value", property2 : "new value"}
         if(this.verifyJwt(token) !== name)
             return Promise.reject(new Error("Update failed: Unauthorized"));
         const coll = await this.collection();
@@ -89,7 +89,7 @@ export class UserService {
         return this.getUserName(name);
     }
 
-    public async deleteUser(name: string, token:string): Promise<User> {  //deletes user and returns the deleted user (in case the data is needed one last time)
+    public async deleteUser(name: string, token:string|null): Promise<User> {  //deletes user and returns the deleted user (in case the data is needed one last time)
         if(this.verifyJwt(token) !== name)
             return Promise.reject(new Error("Delete failed: Unauthorized"));
         const coll = await this.collection();

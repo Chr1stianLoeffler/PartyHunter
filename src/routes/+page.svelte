@@ -1,5 +1,6 @@
+
 <script>
-  // JavaScript-Code kann hier platziert werden, falls notwendig.
+
 </script>
 
 <div class="container h-full mx-auto flex justify-center items-center">
@@ -17,7 +18,7 @@
     </div>
     <div class="space-y-2">
       
-      <button class="btn glass">Jetzt Regestrieren</button>
+      <a class="btn glass" href="registrieren">Jetzt Regestrieren</a>
       
     </div>
   </div>
