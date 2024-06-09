@@ -10,6 +10,7 @@
       <img src="/PartyHunterLogo.png" alt="Party Hunter Logo" class="w-full h-full object-cover">
     </figure>
     <div class="flex justify-center space-x-2">
+      
       <a class="btn variant-filled" href="https://skeleton.dev/" target="_blank" rel="noreferrer">
         Entdecke neue Events und Partys in deiner Nähe!
       </a>
