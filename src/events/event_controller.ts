@@ -6,6 +6,13 @@ import {Get, Post, Put, Delete, Route, Body, Response, SuccessResponse, Header} 
 @Route("events")
 export class EventController{
     
+    @Get()
+    @SuccessResponse(200, "OK")
+    @Response(404, "NOT FOUND")
+    public async getAllEvents(): Promise<Event[]|null> {
+        return new EventService().getAllEvents();
+    }
+
     @Get("{eventId}")
     @SuccessResponse(200, "OK")
     @Response(404, "NOT FOUND")

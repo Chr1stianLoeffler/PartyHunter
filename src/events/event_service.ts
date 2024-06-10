@@ -29,6 +29,11 @@ export class EventService {
         return coll.findOne({ "_id": eventId });
     }
 
+    public async getAllEvents(): Promise<Event[]|null> {
+        const coll = await this.collection();
+        return coll.find().toArray();
+    }
+
     public async createEvent(toCreate: Event, token:string): Promise<Event> {
         if (this.verifyJwt(token) !== toCreate.creator)
             return Promise.reject(new Error("Create failed: Unauthorized"))
