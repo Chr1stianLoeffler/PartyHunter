@@ -22,6 +22,15 @@ export class EventController{
         return new EventService().getEvent(new ObjectId(eventId));
     }
 
+    @Get("{username}")
+    @SuccessResponse(200, "OK")
+    @Response(404, "NOT FOUND")
+    public async getAllEventsFromUser(
+        username: string
+    ): Promise<Event[]|null> {
+        return new EventService().getAllEventsFromUser(username);
+    }
+
     @Post()
     @SuccessResponse(201, "Created")
     @Response(401, "Unauthorized")

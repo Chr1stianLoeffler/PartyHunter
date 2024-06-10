@@ -5,6 +5,9 @@
 	"/api/events": [
 		"src/routes/api/events/+server.ts"
 	],
+	"/api/events/[username]": [
+		"src/routes/api/events/[username]/+server.ts"
+	],
 	"/api/users/login": [
 		"src/routes/api/users/login/+server.ts"
 	],
