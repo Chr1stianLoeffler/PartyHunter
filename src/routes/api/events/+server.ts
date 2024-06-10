@@ -20,10 +20,8 @@ function extractUsername(headers: Headers): string | null {
 export const POST: ({request}: { request: any }) => Promise<Response> = async ({ request }) => {
     try {
         const body = await request.json();
-        console.log(request.headers.get("authorization"))
         const token = extractToken(request.headers)
         const username = extractUsername(request.headers)
-        console.log(token)
         if(!token)
             throw new Error("No token provided");
 
@@ -45,11 +43,11 @@ export const POST: ({request}: { request: any }) => Promise<Response> = async ({
 
         const controller = new EventController();
         const newEvent = await controller.createEvent(eventDetails, token);
-        console.log("The Event should be created")
 
         return new Response(JSON.stringify(newEvent), {status: 201});
     } catch (error) {
-        console.log(error)
+        if (error.message.includes("Create failed: Unauthorized"))
+            return new Response(JSON.stringify({body: {error: error}}), {status: 401})
         return new Response(JSON.stringify({body: { error: 'Failed to create Event' }}), {status:500});
     }
 };

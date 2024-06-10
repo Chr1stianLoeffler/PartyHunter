@@ -1,7 +1,7 @@
 import { configDotenv } from "dotenv";
 import * as mongo from "mongodb";
 import bcrypt from "bcrypt";
-import jwt__default from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 class UserService {
   mongoUrl;
   userProjection;
@@ -20,7 +20,7 @@ class UserService {
   verifyJwt(token) {
     if (!token)
       throw new Error("No token provided");
-    const verified = jwt__default.verify(token, process.env.SECRET_KEY);
+    const verified = jwt.verify(token, process.env.SECRET_KEY);
     return verified.username;
   }
   async collection() {
@@ -110,7 +110,7 @@ class UserService {
     const isValid = await bcrypt.compare(password, user.password);
     if (!isValid)
       return Promise.reject(new Error("Login failed: Incorrect username or password!"));
-    const token = jwt__default.sign({ username: user.username }, process.env.SECRET_KEY, { expiresIn: process.env.EXPIRATION_TIME });
+    const token = jwt.sign({ username: user.username }, process.env.SECRET_KEY, { expiresIn: process.env.EXPIRATION_TIME });
     const userWithoutPassword = {
       //turn UserWithPass into normal User without Typescript crying
       _id: user._id,
