@@ -90,7 +90,6 @@
       latitude: latitude,
       longitude: longitude
     };
-    console.log([longitude,latitude])
   }
 </script>
 
