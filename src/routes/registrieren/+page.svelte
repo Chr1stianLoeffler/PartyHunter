@@ -25,7 +25,7 @@
                 if (token) {
                     sessionStorage.setItem("jwt", token)
                     sessionStorage.setItem("username", username)
-                    goto("/main")
+                    goto("/events")
                 }
             } else if (response.status == 409){
                 const errorData = await response.json();
