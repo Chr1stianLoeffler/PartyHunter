@@ -14,7 +14,9 @@
 	"/api/users/[username]": [
 		"src/routes/api/users/[username]/+server.ts"
 	],
-	"/events": [],
+	"/events": [
+		"src/routes/events/+page.ts"
+	],
 	"/events/new": [
 		"src/routes/events/new/+page.ts"
 	],

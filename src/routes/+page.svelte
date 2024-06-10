@@ -12,7 +12,7 @@
     </figure>
     <div class="flex justify-center space-x-2">
       
-      <a class="btn variant-filled" href="https://skeleton.dev/" target="_blank" rel="noreferrer">
+      <a class="btn variant-filled" href="/events" rel="noreferrer">
         Entdecke neue Events und Partys in deiner Nähe!
       </a>
     </div>

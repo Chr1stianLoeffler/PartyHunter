@@ -23,7 +23,7 @@ export const POST: ({request}: { request: any }) => Promise<Response> = async ({
         const token = extractToken(request.headers)
         const username = extractUsername(request.headers)
         if(!token)
-            throw new Error("No token provided");
+            return new Response(JSON.stringify("No token provided"), {status: 401});
 
         const { eventName, eventDate, eventLocation, eventDescription } = body;
 
@@ -51,3 +51,25 @@ export const POST: ({request}: { request: any }) => Promise<Response> = async ({
         return new Response(JSON.stringify({body: { error: 'Failed to create Event' }}), {status:500});
     }
 };
+
+export const GET: () => Promise<Response> = async () => {
+    try {
+        const controller = new EventController();
+        const events: Event[] = await controller.getAllEvents();
+        return new Response(JSON.stringify(events), {status: 200})
+    } catch (error) {
+        return new Response(JSON.stringify({ error: 'Failed to fetch events' }), { status: 500 });
+    }
+}
+
+export const PUT: ({request}: { request: any }) => Promise<Response> = async ({ request }) => {
+    try {
+        const body = await request.json();
+        const token = extractToken(request.headers)
+        const username = extractUsername(request.headers)
+        if(!token)
+            return new Response(JSON.stringify("No token provided"), {status: 401});
+    } catch (e) {
+
+    }
+}
