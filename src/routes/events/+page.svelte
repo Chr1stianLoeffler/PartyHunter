@@ -12,9 +12,18 @@
     // Weitere Events hinzufügen
   ];
 
+  /**
+     * @type {string | null}
+     */
   let selectedDate = null;
+  /**
+     * @type {{ id: number; title: string; location: string; date: string; description: string; } | null | undefined}
+     */
   let selectedEvent = null;
 
+  /**
+     * @param {string | null} date
+     */
   function selectDate(date) {
     selectedDate = date;
     selectedEvent = events.find(event => event.date === selectedDate);

@@ -15,7 +15,9 @@
 		"src/routes/api/users/[username]/+server.ts"
 	],
 	"/events": [],
-	"/events/new": [],
+	"/events/new": [
+		"src/routes/events/new/+page.ts"
+	],
 	"/login": [],
 	"/main": [],
 	"/registrieren": []
