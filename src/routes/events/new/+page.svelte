@@ -48,10 +48,10 @@
     map = tt.map({
       key: 'OvTfqyf8PyjDAEEWc0evLsKYaVNdGvbL',
       container: mapElement,
-      center: [8.53434, 49.474235],
-      zoom: 15.5,
+      center: [8.461771, 49.482983],
+      zoom: 13,
     });
-    marker = new tt.Marker().setLngLat([8.53434, 49.474235]).addTo(map);
+    marker = new tt.Marker().setLngLat([8.461771, 49.482983]).addTo(map);
   });
 
   let searchResults: LocationPoint[];
@@ -90,6 +90,7 @@
       latitude: latitude,
       longitude: longitude
     };
+    console.log([longitude,latitude])
   }
 </script>
 
