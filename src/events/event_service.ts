@@ -1,7 +1,7 @@
 import { configDotenv } from "dotenv";
 import { type Event } from "./event";
 import * as mongo from "mongodb";
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 
 export class EventService {
     mongoUrl: string;
@@ -13,7 +13,7 @@ export class EventService {
 
     private verifyJwt(token:string): string {
         if(!token) throw new Error("No token provided");
-        
+        console.log(token)
         const verified = jwt.verify(token, process.env.SECRET_KEY as string) as unknown as {username: string};
         return verified.username;
     }

@@ -1,12 +1,33 @@
-<script>
+<script lang="ts">
   let eventName = '';
   let eventDate = '';
   let eventLocation = '';
   let eventDescription = '';
+  let errorMessage = '';
 
-  const handleSubmit = (e) => {
-    e.preventDefault();
-    // Hier kannst du die Logik für das Erstellen eines neuen Events hinzufügen, z.B. API-Aufruf
+  const handleSubmit = async (e) => {
+    if (eventName && eventDate && eventLocation && eventDescription) {
+      const token = sessionStorage.getItem("jwt")
+      console.log(token)
+      const username = sessionStorage.getItem("username")
+      console.log(username)
+      // Hier kannst du die Logik für das Erstellen eines neuen Events hinzufügen, z.B. API-Aufruf
+      const response = await fetch('/api/events', {
+        method: "POST",
+        headers: {
+          'Content-Type': 'application/json',
+          'Authorization': `Bearer ${token}`,
+          'username': `Bearer ${token}`
+        },
+        body: JSON.stringify({eventName, eventDate, eventLocation, eventDescription})
+      });
+
+      if (response.ok) {
+
+      }
+    } else {
+      errorMessage = "Es fehlen Informationen um ein Event zu erstellen"
+    }
     console.log({ eventName, eventDate, eventLocation, eventDescription });
     // Nach der Erstellung kann man zu einer anderen Seite navigieren
   };
@@ -35,4 +56,7 @@
       <button class="btn btn-primary" type="submit">Event erstellen</button>
     </div>
   </form>
+  {#if errorMessage}
+    <div class="error-message">{errorMessage}</div>
+  {/if}
 </div>

@@ -34,7 +34,7 @@
                 errorMessage = 'Error: ' + errorData.message;
             }
         } else {
-            errorMessage = 'Es fehlen Daten, um sich anzumelden';
+            errorMessage = 'Es fehlen Daten, um sich einzulogen';
         }
     }
 
