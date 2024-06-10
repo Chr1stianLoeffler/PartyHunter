@@ -79,7 +79,7 @@
       "_index.js"
     ],
     "css": [
-      "_app/immutable/assets/_layout.s1RlQsyK.css"
+      "_app/immutable/assets/_layout.ZP8LzmZk.css"
     ]
   },
   "src/routes/+page.server.ts": {
@@ -152,9 +152,6 @@
     "isEntry": true,
     "imports": [
       "_ssr.js"
-    ],
-    "css": [
-      "_app/immutable/assets/_page.ijDWdgJE.css"
     ]
   },
   "src/routes/login/+page.svelte": {

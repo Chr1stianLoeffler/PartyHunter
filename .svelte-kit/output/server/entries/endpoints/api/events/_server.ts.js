@@ -1,7 +1,7 @@
 import * as mongo from "mongodb";
 import { ObjectId } from "mongodb";
 import { configDotenv } from "dotenv";
-import * as jwt from "jsonwebtoken";
+import jwt from "jsonwebtoken";
 import { Get, SuccessResponse, Response as Response$1, Post, Body, Header, Put, Delete, Route } from "tsoa";
 class EventService {
   mongoUrl;
@@ -12,6 +12,7 @@ class EventService {
   verifyJwt(token) {
     if (!token)
       throw new Error("No token provided");
+    console.log(token);
     const verified = jwt.verify(token, process.env.SECRET_KEY);
     return verified.username;
   }
@@ -129,23 +130,48 @@ EventController = __decorateClass([
   Route("events")
 ], EventController);
 function extractToken(headers) {
-  const authHeader = headers.get("Authorization");
+  const authHeader = headers.get("authorization");
   if (!authHeader)
     return null;
   const token = authHeader.split(" ")[1];
   return token;
 }
+function extractUsername(headers) {
+  const authHeader = headers.get("username");
+  if (!authHeader)
+    return null;
+  const username = authHeader.split(" ")[1];
+  return username;
+}
 const POST = async ({ request }) => {
   try {
     const body = await request.json();
+    console.log(request.headers.get("authorization"));
     const token = extractToken(request.headers);
+    const username = extractUsername(request.headers);
+    console.log(token);
     if (!token)
       throw new Error("No token provided");
+    const { eventName, eventDate, eventLocation, eventDescription } = body;
+    const eventDetails = {
+      _id: void 0,
+      creator: username,
+      name: eventName,
+      tags: void 0,
+      title: void 0,
+      genre_or_atmosphere: void 0,
+      description: eventDescription,
+      date_and_time: eventDate,
+      location: eventLocation,
+      address: void 0,
+      pictures: void 0
+    };
     const controller = new EventController();
-    const newEvent = await controller.createEvent(body, token);
+    const newEvent = await controller.createEvent(eventDetails, token);
     console.log("The Event should be created");
     return new Response(JSON.stringify(newEvent), { status: 201 });
   } catch (error) {
+    console.log(error);
     return new Response(JSON.stringify({ body: { error: "Failed to create Event" } }), { status: 500 });
   }
 };

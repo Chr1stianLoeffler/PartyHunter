@@ -5,8 +5,16 @@ export const POST: ({request}: { request: any }) => Promise<Response> = async ({
     try {
         console.log("Hello World")
         const body = await request.json();
+        console.log(body)
+
+        const username = body.username
+        const password = body.password
+
         const controller = new Login();
-        const loggedinUser = await controller.loginUser(body);
+        const loggedinUser = await controller.loginUser({
+            nameOrEmail: username,
+            password: password
+        });
 
         const header = new Headers();
         header.append("username", loggedinUser.user.username);
