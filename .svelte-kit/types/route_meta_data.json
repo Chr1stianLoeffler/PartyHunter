@@ -1,0 +1,22 @@
+{
+	"/": [
+		"src/routes/+page.server.ts"
+	],
+	"/api/events": [
+		"src/routes/api/events/+server.ts"
+	],
+	"/api/users/login": [
+		"src/routes/api/users/login/+server.ts"
+	],
+	"/api/users/register": [
+		"src/routes/api/users/register/+server.ts"
+	],
+	"/api/users/[username]": [
+		"src/routes/api/users/[username]/+server.ts"
+	],
+	"/events": [],
+	"/events/new": [],
+	"/login": [],
+	"/main": [],
+	"/registrieren": []
+}
