@@ -45,7 +45,7 @@ export const POST: ({request}: { request: any }) => Promise<Response> = async ({
         const newEvent = await controller.createEvent(eventDetails, token);
 
         return new Response(JSON.stringify(newEvent), {status: 201});
-    } catch (error) {
+    } catch (error:any) {
         if (error.message.includes("Create failed: Unauthorized"))
             return new Response(JSON.stringify({body: {error: error}}), {status: 401})
         return new Response(JSON.stringify({body: { error: 'Failed to create Event' }}), {status:500});

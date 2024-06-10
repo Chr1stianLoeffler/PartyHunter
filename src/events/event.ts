@@ -20,8 +20,6 @@ export interface LocationPoint {
 
     name: string,
     address: string,
-    type: string,
-    id: ObjectId,
     longitude: number,
     latitude: number
     
