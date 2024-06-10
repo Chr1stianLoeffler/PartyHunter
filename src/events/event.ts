@@ -12,7 +12,7 @@ export interface Event {
     date_and_time: string;
     location: LocationPoint; 
     address: string | undefined;       //human readable address that will be displayed on the website
-    pictures: any;         //TODO: figure out what data type this should have..
+    pictures: any;        
 
 }
 
