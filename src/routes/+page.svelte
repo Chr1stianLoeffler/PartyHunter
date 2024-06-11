@@ -5,7 +5,9 @@
 
 <div class="container h-full mx-auto flex justify-center items-center">
   <div class="space-y-10 text-center flex flex-col items-center">
-    <h2 class="text-2xl font-bold">Willkommen bei</h2>
+    <h1 class="h1">
+      <span class="bg-gradient-to-br from-pink-500 to-violet-500 bg-clip-text text-transparent box-decoration-clone">Willkommen bei</span>
+    </h1>
     <figure class="relative w-64 h-64 md:w-80 md:h-80">
       <div class="bg-effect absolute top-0 left-0 w-full h-full rounded-full blur-[50px] transition-all z-[-1]"></div>
       <img src="/PartyHunterLogo.png" alt="Party Hunter Logo" class="w-full h-full object-cover">
@@ -18,7 +20,7 @@
     </div>
     <div class="space-y-2">
       
-      <a class="btn glass" href="registrieren">Jetzt Registrieren</a>
+      <button type="button" class="btn !bg-transparent">Jetzt Registrieren</button>
       
     </div>
   </div>
