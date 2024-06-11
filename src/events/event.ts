@@ -10,9 +10,9 @@ export interface Event {
     tags: string[] | undefined;
     genre_or_atmosphere: string | undefined;   //if it's disco etc. this is the music genre, if there is no music (i.e. bar quiz) this is the atmosphere
     date_and_time: string;
-    location: LocationPoint;   //TODO: figure out data type (need to be able to calculate distance between two locations) and connect to Google Maps somehow
+    location: LocationPoint; 
     address: string | undefined;       //human readable address that will be displayed on the website
-    pictures: any;         //TODO: figure out what data type this should have..
+    pictures: any;        
 
 }
 
