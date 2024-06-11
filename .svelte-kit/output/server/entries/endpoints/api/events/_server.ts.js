@@ -25,6 +25,10 @@ class EventService {
     const coll = await this.collection();
     return coll.findOne({ "_id": eventId });
   }
+  async getAllEvents() {
+    const coll = await this.collection();
+    return coll.find().toArray();
+  }
   async createEvent(toCreate, token) {
     if (this.verifyJwt(token) !== toCreate.creator)
       return Promise.reject(new Error("Create failed: Unauthorized"));
@@ -83,6 +87,9 @@ var __decorateClass = (decorators, target, key, kind) => {
 };
 var __decorateParam = (index, decorator) => (target, key) => decorator(target, key, index);
 let EventController = class {
+  async getAllEvents() {
+    return new EventService().getAllEvents();
+  }
   async getEvent(eventId) {
     return new EventService().getEvent(new ObjectId(eventId));
   }
@@ -96,6 +103,11 @@ let EventController = class {
     return new EventService().deleteEvent(new ObjectId(eventId), token);
   }
 };
+__decorateClass([
+  Get(),
+  SuccessResponse(200, "OK"),
+  Response$1(404, "NOT FOUND")
+], EventController.prototype, "getAllEvents", 1);
 __decorateClass([
   Get("{eventId}"),
   SuccessResponse(200, "OK"),
@@ -146,12 +158,10 @@ function extractUsername(headers) {
 const POST = async ({ request }) => {
   try {
     const body = await request.json();
-    console.log(request.headers.get("authorization"));
     const token = extractToken(request.headers);
     const username = extractUsername(request.headers);
-    console.log(token);
     if (!token)
-      throw new Error("No token provided");
+      return new Response(JSON.stringify("No token provided"), { status: 401 });
     const { eventName, eventDate, eventLocation, eventDescription } = body;
     const eventDetails = {
       _id: void 0,
@@ -168,13 +178,34 @@ const POST = async ({ request }) => {
     };
     const controller = new EventController();
     const newEvent = await controller.createEvent(eventDetails, token);
-    console.log("The Event should be created");
     return new Response(JSON.stringify(newEvent), { status: 201 });
   } catch (error) {
-    console.log(error);
+    if (error.message.includes("Create failed: Unauthorized"))
+      return new Response(JSON.stringify({ body: { error } }), { status: 401 });
     return new Response(JSON.stringify({ body: { error: "Failed to create Event" } }), { status: 500 });
   }
 };
+const GET = async () => {
+  try {
+    const controller = new EventController();
+    const events = await controller.getAllEvents();
+    return new Response(JSON.stringify(events), { status: 200 });
+  } catch (error) {
+    return new Response(JSON.stringify({ error: "Failed to fetch events" }), { status: 500 });
+  }
+};
+const PUT = async ({ request }) => {
+  try {
+    const body = await request.json();
+    const token = extractToken(request.headers);
+    const username = extractUsername(request.headers);
+    if (!token)
+      return new Response(JSON.stringify("No token provided"), { status: 401 });
+  } catch (e) {
+  }
+};
 export {
-  POST
+  GET,
+  POST,
+  PUT
 };

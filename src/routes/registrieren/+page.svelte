@@ -49,7 +49,7 @@
 
 <div class="container">
     <div class="logo">
-        PARTY <span>  HUNTER  </span>
+        <img src="/PartyHunterLogo.png" alt="Party Hunter Logo" style="width: 300px; height: auto; object-fit: cover;">
     </div>
     <div class="subtitle">
         ERSTELLE EINEN NEUEN ACCOUNT
@@ -72,23 +72,14 @@
         flex-direction: column;
         align-items: center;
         justify-content: center;
-        height: 100vh;
+        min-width: 190vh;
+        min-height: 50vh;
         background-color: #000;
         color: #fff;
         text-align: center;
     }
     .logo {
-        font-family: 'Bebas Neue', sans-serif;
-        font-size: 6rem;
-        font-weight: bold;
         margin-bottom: 2rem;
-        letter-spacing: 0.5rem;
-    }
-    .logo span {
-        display: block;
-        font-size: 1rem;
-        letter-spacing: normal;
-        color: #fff;
     }
     .subtitle {
         font-size: 1.5rem;

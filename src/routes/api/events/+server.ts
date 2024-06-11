@@ -2,6 +2,7 @@ import type { RequestHandler } from '@sveltejs/kit';
 import { EventController } from '../../../events/event_controller';
 import {ObjectId} from "mongodb";
 import type { Event } from "../../../events/event";
+import { log } from 'console';
 
 function extractToken(headers: Headers): string | null {
     const authHeader = headers.get('authorization');
@@ -58,6 +59,7 @@ export const GET: () => Promise<Response> = async () => {
         const events: Event[] = await controller.getAllEvents();
         return new Response(JSON.stringify(events), {status: 200})
     } catch (error) {
+        console.log(error)
         return new Response(JSON.stringify({ error: 'Failed to fetch events' }), { status: 500 });
     }
 }

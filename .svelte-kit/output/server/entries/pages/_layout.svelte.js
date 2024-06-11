@@ -148,10 +148,10 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     header: () => {
       return `${validate_component(AppBar, "AppBar").$$render($$result, {}, {}, {
         trail: () => {
-          return `<a class="btn btn-primary text-xl uppercase font-bold" href="/events" data-svelte-h="svelte-jehft8">Events</a> <a class="btn btn-primary text-xl uppercase font-bold" href="/events/new" data-svelte-h="svelte-xji8s6">Neues Event erstellen</a>  <a class="btn btn-primary text-xl uppercase font-bold" href="https://discord.gg/EXqV7W8MtY" target="_blank" rel="noreferrer" data-svelte-h="svelte-dodwti">Discord</a> <a class="btn btn-primary text-xl uppercase font-bold" href="/login" target="_blank" rel="noreferrer" data-svelte-h="svelte-d2mwwn">Login</a> <a class="btn btn-primary text-xl uppercase font-bold" href="https://github.com/skeletonlabs/skeleton" target="_blank" rel="noreferrer" data-svelte-h="svelte-1q5mopy">GitHub</a> `;
+          return `<a class="btn btn-primary text-xl uppercase font-bold" href="/events" data-svelte-h="svelte-jehft8">Events</a> <a class="btn btn-primary text-xl uppercase font-bold" href="/events/new" data-svelte-h="svelte-xji8s6">Neues Event erstellen</a>  <a class="btn btn-primary text-xl uppercase font-bold" href="https://github.com/Chr1stianLoeffler/PartyHunter" target="_blank" rel="noreferrer" data-svelte-h="svelte-155e39o">GitHub</a> <a class="btn btn-primary text-xl uppercase font-bold" href="/login" rel="noreferrer" data-svelte-h="svelte-1quczh4">Login</a> <a class="btn btn-primary text-xl uppercase font-bold" href="/registrieren" rel="noreferrer" data-svelte-h="svelte-i1bpce">Registrieren</a> `;
         },
         lead: () => {
-          return `<a href="/" class="btn btn-primary text-xl uppercase font-bold" data-svelte-h="svelte-1o8mzk3">Party-Hunter</a>`;
+          return `<a href="/" class="btn btn-primary text-xl uppercase font-bold" data-svelte-h="svelte-fsr4c3"><img src="/PartyHunterLogo.png" style="width: 100px; height: auto;" alt="PartyHunterLogo"></a>`;
         }
       })} `;
     },
