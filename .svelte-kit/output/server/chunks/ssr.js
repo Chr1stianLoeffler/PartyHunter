@@ -146,10 +146,10 @@ function add_styles(style_object) {
 }
 export {
   add_attribute as a,
-  subscribe as b,
+  escape as b,
   create_ssr_component as c,
-  each as d,
-  escape as e,
+  subscribe as d,
+  each as e,
   setContext as f,
   getContext as g,
   get_store_value as h,

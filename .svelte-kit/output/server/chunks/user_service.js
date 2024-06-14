@@ -104,11 +104,7 @@ class UserService {
         { "accountEmail": nameOrEmail }
       ]
     };
-    console.log(nameOrEmail);
-    console.log(query);
-    console.log(password);
     const user = await coll.findOne(query);
-    console.log(user);
     if (!user)
       return Promise.reject(new Error("Login failed: Incorrect username or password!"));
     const isValid = await bcrypt.compare(password, user.password);

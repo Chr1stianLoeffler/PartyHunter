@@ -22,6 +22,10 @@
       "_exports.js"
     ]
   },
+  "_event_controller.js": {
+    "file": "chunks/event_controller.js",
+    "name": "event_controller"
+  },
   "_exports.js": {
     "file": "chunks/exports.js",
     "name": "exports"
@@ -79,7 +83,7 @@
       "_index.js"
     ],
     "css": [
-      "_app/immutable/assets/_layout.6yqFu5Se.css"
+      "_app/immutable/assets/_layout.CUPRihC6.css"
     ]
   },
   "src/routes/+page.server.ts": {
@@ -104,7 +108,19 @@
     "file": "entries/endpoints/api/events/_server.ts.js",
     "name": "entries/endpoints/api/events/_server.ts",
     "src": "src/routes/api/events/+server.ts",
-    "isEntry": true
+    "isEntry": true,
+    "imports": [
+      "_event_controller.js"
+    ]
+  },
+  "src/routes/api/events/[username]/+server.ts": {
+    "file": "entries/endpoints/api/events/_username_/_server.ts.js",
+    "name": "entries/endpoints/api/events/_username_/_server.ts",
+    "src": "src/routes/api/events/[username]/+server.ts",
+    "isEntry": true,
+    "imports": [
+      "_event_controller.js"
+    ]
   },
   "src/routes/api/users/[username]/+server.ts": {
     "file": "entries/endpoints/api/users/_username_/_server.ts.js",
@@ -140,9 +156,6 @@
     "isEntry": true,
     "imports": [
       "_ssr.js"
-    ],
-    "css": [
-      "_app/immutable/assets/_page.Ct-6dp0s.css"
     ]
   },
   "src/routes/events/+page.ts": {
@@ -178,6 +191,9 @@
     "imports": [
       "_ssr.js",
       "_client.js"
+    ],
+    "css": [
+      "_app/immutable/assets/_page.BGOapWTb.css"
     ]
   },
   "src/routes/main/+page.svelte": {
@@ -199,7 +215,7 @@
       "_client.js"
     ],
     "css": [
-      "_app/immutable/assets/_page.DX11Do1J.css"
+      "_app/immutable/assets/_page.DEpI1-1Y.css"
     ]
   }
 }

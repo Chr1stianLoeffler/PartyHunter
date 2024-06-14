@@ -3,9 +3,7 @@ import {Login} from "../../../../users/auth_controller";
 
 export const POST: ({request}: { request: any }) => Promise<Response> = async ({ request }) => {   
     try {
-        console.log("Hello World")
         const body = await request.json();
-        console.log(body)
 
         const username = body.username
         const password = body.password
@@ -22,7 +20,6 @@ export const POST: ({request}: { request: any }) => Promise<Response> = async ({
 
         return new Response("Login successful", { status: 200, headers : header});
     } catch (error:any) {
-        console.log(error)
         if (error.message.includes('Login failed: Incorrect username or password!')) {
             return new Response(JSON.stringify({ message: error.message }), { status: 409 });
         }

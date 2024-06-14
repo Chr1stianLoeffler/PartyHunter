@@ -1,9 +1,7 @@
 import { L as Login } from "../../../../../chunks/auth_controller.js";
 const POST = async ({ request }) => {
   try {
-    console.log("Hello World");
     const body = await request.json();
-    console.log(body);
     const username = body.username;
     const password = body.password;
     const controller = new Login();
@@ -16,7 +14,6 @@ const POST = async ({ request }) => {
     header.append("Authorization", loggedinUser.token);
     return new Response("Login successful", { status: 200, headers: header });
   } catch (error) {
-    console.log(error);
     if (error.message.includes("Login failed: Incorrect username or password!")) {
       return new Response(JSON.stringify({ message: error.message }), { status: 409 });
     }

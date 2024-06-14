@@ -1,4 +1,4 @@
-import { h as get_store_value, c as create_ssr_component, e as escape, a as add_attribute, i as compute_slots, j as add_styles, v as validate_component } from "../../chunks/ssr.js";
+import { h as get_store_value, c as create_ssr_component, b as escape, a as add_attribute, i as compute_slots, j as add_styles, v as validate_component } from "../../chunks/ssr.js";
 import { w as writable, r as readable } from "../../chunks/index.js";
 const stores = {};
 function localStorageStore(key, initialValue, options) {
@@ -148,7 +148,7 @@ const Layout = create_ssr_component(($$result, $$props, $$bindings, slots) => {
     header: () => {
       return `${validate_component(AppBar, "AppBar").$$render($$result, {}, {}, {
         trail: () => {
-          return `<a class="btn btn-primary text-xl uppercase font-bold" href="/events" data-svelte-h="svelte-jehft8">Events</a> <a class="btn btn-primary text-xl uppercase font-bold" href="/events/new" data-svelte-h="svelte-xji8s6">Neues Event erstellen</a>  <a class="btn btn-primary text-xl uppercase font-bold" href="https://github.com/Chr1stianLoeffler/PartyHunter" target="_blank" rel="noreferrer" data-svelte-h="svelte-155e39o">GitHub</a> <a class="btn btn-primary text-xl uppercase font-bold" href="/login" rel="noreferrer" data-svelte-h="svelte-1quczh4">Login</a> <a class="btn btn-primary text-xl uppercase font-bold" href="/registrieren" rel="noreferrer" data-svelte-h="svelte-i1bpce">Registrieren</a> `;
+          return `<a class="btn btn-primary text-xl uppercase font-bold" href="/events" data-svelte-h="svelte-jehft8">Events</a> <a class="btn btn-primary text-xl uppercase font-bold" href="/events/new" data-svelte-h="svelte-xji8s6">Neues Event erstellen</a> <a class="btn btn-primary text-xl uppercase font-bold" href="https://github.com/Chr1stianLoeffler/PartyHunter" target="_blank" rel="noreferrer" data-svelte-h="svelte-155e39o">GitHub</a> <a class="btn btn-primary text-xl uppercase font-bold" href="/login" rel="noreferrer" data-svelte-h="svelte-1quczh4">Login</a> <a class="btn btn-primary text-xl uppercase font-bold" href="/registrieren" rel="noreferrer" data-svelte-h="svelte-i1bpce">Registrieren</a> `;
         },
         lead: () => {
           return `<a href="/" class="btn btn-primary text-xl uppercase font-bold" data-svelte-h="svelte-fsr4c3"><img src="/PartyHunterLogo.png" style="width: 100px; height: auto;" alt="PartyHunterLogo"></a>`;
